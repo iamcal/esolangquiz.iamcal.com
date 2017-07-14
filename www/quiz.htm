@@ -1,0 +1,361 @@
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+	<link rel="shortcut icon" href="http://esolangquiz.iamcal.com/favicon.png" sizes="16x16" type="image/png">
+	<meta property="og:url" content="http://esolangquiz.iamcal.com/language-identification">
+	<meta property="og:title" content="Take the Esoteric Language Identification Quiz!">
+	<meta property="og:type" content="website">
+	<meta property="og:description" content="Think you can beat my score? Click here to take the quiz.">
+	<title>Esolang Quiz</title>
+	<link rel="stylesheet" type="text/css" href="quiz.css">
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script src="https://use.fontawesome.com/82468b63aa.js"></script>
+
+<script>
+
+$(function(){
+
+	$('#c0 label').click(function(){ clickAnswer(0); });
+	$('#c1 label').click(function(){ clickAnswer(1); });
+	$('#c2 label').click(function(){ clickAnswer(2); });
+	$('#c3 label').click(function(){ clickAnswer(3); });
+	$('#next-question').click(function(){ nextQuestion(); });
+	$('#start-button').click(function(){ setupQuestion(0); });
+	$('#retry').click(function(){ setupQuestion(0); });
+});
+
+var qs = [
+	{
+		'code' : 'function handleClick() {\n  var counter = document.getElementById(\'counter\');\n  var count = parseInt(counter.innerHTML);\n  counter.innerHTML = count + 1;\n}',
+		'hljs' : 'language-javascript',
+		'choices' : ['JavaScript', 'Swift', 'Kotlin', 'C++'],
+		'explanation' : 'Blah blah blah blah blah blah blah blah'
+	},
+	{
+		'code' : 'function handleClick() {\n  var counter = document.getElementById(\'counter\');\n  var count = parseInt(counter.innerHTML);\n  counter.innerHTML = count + 1;\n}',
+		'hljs' : 'language-javascript',
+		'choices' : ['JavaScript', 'XSwift', 'XKotlin', 'XC++'],
+		'explanation' : 'Blah blah blah blah blah blah blah blah!'
+	}
+];
+
+var scores = [
+	[7, "Excellent job!","You're in the top 3% of engineers!"],
+	[2, "Great work!","You're in the top 25% of engineers. We think you're made of the right stuff."],
+	[1, "Good work!","You're in the top 50% of engineers."],
+	[0, "Not bad!", ""]
+];
+
+var g_score = 0;
+var g_idx = 0;
+var g_order = [];
+var g_clicked = false;
+
+function setupQuestion(id){
+
+	if (id == 0){
+		g_score = 0;
+	}
+
+	var order = [0,1,2,3];
+	shuffle(order);
+
+	g_idx = id;
+	g_order = order;
+	g_clicked = false;
+
+	for (var i=0; i<4; i++){
+		$('#c'+i+' label').removeClass('clicked').css({
+			'background' : '',
+			'borderColor' : ''
+		});
+		$('#c'+i+' i').css({
+			'color' : ''
+		}).addClass('fa-check').removeClass('fa-times');;
+		$('#c'+i+' div').text(qs[id].choices[order[i]]);
+	}
+
+	$('#code').text(qs[id].code).attr('class','').addClass('hljs').addClass(qs[id].hljs).each(function(i, block) {
+		hljs.highlightBlock(block);
+	});
+
+	$('#qtitle').text('Question '+(id+1)+' / '+qs.length);
+	$('#explanation').hide();
+
+	$('#next-question').attr('value', id+1 == qs.length ? 'See Results' : 'Next Question');
+
+	$('#intro').hide();
+	$('#outro').hide();
+	$('#questions').show();
+
+	scrollTo($('#question-header'));
+}
+
+function clickAnswer(id){
+
+	if (g_clicked) return;
+	g_clicked = true;
+
+	if (g_order[id] == 0){
+		// correct!
+		markCorrect(id);
+		g_score++;
+
+		$('.explanation-container').css({
+			'backgroundColor' : 'rgb(38, 194, 131)'
+		});
+		$('#explanation-title i').addClass('fa-check').removeClass('fa-times');
+		$('#explanation-title span').text('You\'re Correct!');
+
+	}else{
+		// incorrect
+		markIncorrect(id);
+		for (var i=0; i<4; i++){
+			if (g_order[i] == 0) markCorrect(i);
+		}
+
+		$('.explanation-container').css({
+			'backgroundColor' : 'rgb(237, 105, 98)'
+		});
+
+		$('#explanation-title i').addClass('fa-times').removeClass('fa-check');
+		$('#explanation-title span').text('Oops, wrong answer!');
+	}
+
+	$('#explanation p').html(qs[g_idx].explanation);
+	$('#explanation').show();
+
+	scrollTo($('#explanation'));
+}
+
+function nextQuestion(){
+
+	if (g_idx+1 == qs.length){
+		$('#questions').hide();
+
+		$('#final-score h2').text("You got "+g_score+" out of "+qs.length+" right");
+
+		for (var i=scores.length-1; i>=0; i--){
+			if (g_score >= scores[i][0]){
+				$('#final-score h1').text(scores[i][1]);
+				$('#extra-result').text(scores[i][2]);
+			}
+		}
+
+		$('#outro').show();
+
+	}else{
+		setupQuestion(g_idx+1);
+	}
+}
+
+function markCorrect(i){
+
+	$('#c'+i+' label').addClass('clicked').css({
+		'background' : 'rgb(217, 247, 235)',
+		'borderColor' : 'rgb(120, 228, 184)'
+	});
+	$('#c'+i+' i').css({
+		'color' : 'green'
+	}).addClass('fa-check').removeClass('fa-times');
+}
+
+function markIncorrect(i){
+
+	$('#c'+i+' label').addClass('clicked').css({
+		'background' : 'rgb(251, 220, 218)',
+		'borderColor' : 'rgb(244, 162, 158)'
+	});
+	$('#c'+i+' i').css({
+		'color' : 'red'
+	}).addClass('fa-times').removeClass('fa-check');
+}
+
+
+function shuffle(a) {
+	var j, x, i;
+	for (i = a.length; i; i--) {
+		j = Math.floor(Math.random() * i);
+		x = a[i - 1];
+		a[i - 1] = a[j];
+		a[j] = x;
+	}
+}
+
+function scrollTo(node){
+	$('html,body').animate({scrollTop: node.offset().top}, 'slow');
+}
+
+</script>
+
+</head>
+<body>
+
+<div id="root">
+<div data-reactroot="" class="app" style="display: flex; flex-direction: column; height: 100vh;">
+<header class="navigation" role="banner">
+<div class="navigation-wrapper">
+
+<ul class="navigation-menu" id="js-navigation-menu" style="display: block;">
+	<li class="nav-link">
+		<a class="logo" href="http://iamcal.com">iamcal.com</a>
+	</li>
+	</ul>
+</div>
+</header>
+
+<div class="container" style="flex: 1 1 0%; width: 100%; padding: 15px;">
+<div class="container-1">
+<div class="quizz hide_radios" id="challenge">
+
+<!-- intro -->
+
+<div id="intro" class="modal v2">
+	<div class="content v2_block" style="padding: 30px 20px;">
+		<h1 class="center">Esoteric Language Identification Quiz</h1>
+		<h2 class="center" style="margin-bottom: 15px;">How many obscure languages can you identify?</h2>
+		<hr class="full-line" style="margin: 15px 0px;">
+		<p class="description">There are hundreds of programming languages in existence, dozens of which are in common use today. Many programmers know at least 2 or 3 languages and can identify several more from a short snippet of code. Can you identify all 15 of these languages?</p>
+		<img src="laptop.bea0e7a9.png" alt="Welcome!" style="height: 150px; width: 260px; margin: 15px auto 30px; display: block;">
+		<div class="center" style="margin-top: 15px;"><input type="submit" value="Start the quiz" id="start-button"></div>
+	</div>
+</div>
+
+<!-- outro -->
+
+<div id="outro" class="modal v2" style="display: none">
+	<div class="content v2_block" style="padding: 30px 20px;">
+		<div style="display: flex; margin-bottom: 15px; justify-content: center; align-items: center;">
+			<img src="celebrate_left.c26e07d1.png" alt="celebration" style="width: 75px; height: 75px;">
+			<div style="margin: 0px 30px;" id="final-score">
+				<h1 class="center">Not bad!</h1>
+				<h2 class="center" style="margin-bottom: 0px;">You got 1 out of 15 right</h2>
+			</div>
+			<img src="celebrate_right.a14805ab.png" alt="celebration" style="width: 75px; height: 75px;">
+		</div>
+		<hr class="full-line" style="margin: 15px 0px;">
+		<p class="description">
+			<span id="extra-result"></span>
+			Can your friends beat you? Share your score and challenge them to do better!
+		</p>
+		<div class="center" style="padding: 15px;">
+			<div class="share-buttons" style="margin: -15px -15px 0px;">
+				<div role="button" tabindex="0" class="SocialMediaShareButton SocialMediaShareButton--facebook" style="height: 35px; color: white; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0px 30px; background-color: rgb(58, 88, 158); margin: 15px;">
+						<div><i class="fa fa-facebook" style="cursor: pointer;"></i><span style="margin-left: 10px;">Share on Facebook</span></div>
+				</div>
+				<div role="button" tabindex="0" class="SocialMediaShareButton SocialMediaShareButton--twitter" style="height: 35px; color: white; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0px 30px; background-color: rgb(66, 200, 244);">
+						<div><i class="fa fa-twitter" style="cursor: pointer;"></i><span style="margin-left: 10px;">Share on Twitter</span></div>
+				</div>
+			</div>
+		</div>
+		<p class="description">
+			We don’t just make quizzes here. We also help engineers get jobs.&nbsp;
+			<strong>Take a slightly longer version of our quiz, and get offers from top tech companies.</strong>
+			&nbsp;
+			<a href="//triplebyte.com/?utm_source=quiz&amp;utm_campaign=quiz1_endscreen">Learn more.</a>
+		</p>
+		<div class="center"><a href="#" id="retry"><i class="fa fa-undo" style="margin-right: 5px;"></i>Retry</a></div>
+	</div>
+</div>
+
+
+<!-- questions -->
+
+<div id="questions" class="content fieldset basic" style="padding: 20px; display: none">
+<div class="challengeIn">
+<div name="question">
+<div id="question-header">
+<h3 id="qtitle">Question 1 / 15</h3>
+<div>
+<p>What language is the below code written in?</p>
+</div>
+<pre>
+<code id="code" class="language-javascript hljs">test</code>
+</pre>
+</div>
+</div>
+
+<h3>Select the correct answer:</h3>
+
+<ul>
+	<li class="radio" id="c0">
+		<label class="clicked" style="background: rgb(217, 247, 235); border-color: rgb(120, 228, 184);">
+			<i class="fa fa-check" style="color: green;"></i>
+			<div>JavaScript</div>
+		</label>
+	</li>
+
+	<li class="radio" id="c1">
+		<label class="clicked" style="background: rgb(251, 220, 218); border-color: rgb(244, 162, 158);">
+			<i class="fa fa-times" style="color: red;"></i>
+			<div>Swift</div>
+		</label>
+	</li>
+
+	<li class="radio" id="c2">
+		<label class="">
+			<i class="fa fa-check"></i>
+			<div>Kotlin</div>
+		</label>
+	</li>
+
+	<li class="radio" id="c3">
+		<label class="">
+			<i class="fa fa-check"></i>
+			<div>C++</div>
+		</label>
+	</li>
+
+</ul>
+
+<div name="explanation" id="explanation">
+	<div>
+		<div class="explanation-container" style="background-color: rgb(237, 105, 98); color: white; padding: 15px 30px 30px;">
+			<div class="center" style="font-size: 16px; font-weight: bold;">
+				<div id="explanation-title">
+					<i class="fa fa-times" style="margin-right: 10px;"></i>
+					<span>Oops, wrong answer!</span>
+				</div>
+				<div class="explanation" style="font-size: 14px; text-align: left; font-weight: normal; margin-top: 10px;">
+					<div>
+						<p>
+The first version of JavaScript was famously (or infamously?) written in just 10 days for the Netscape Navigator browser. Originally called LiveScript, the name was eventually changed to JavaScript at least partially as a marketing move to try to take advantage of the popularity of Java. Today, JavaScript is one of the most widely used languages, and can be found in browsers, on servers, or in applications like embedded systems or IoT devices.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	<div class="modal v2" style="display: flex; margin-top: 15px; margin-bottom: 0px;">
+		<div class="v2_block" style="margin-left: auto;">
+			<input type="submit" value="Next Question" id="next-question">
+		</div>
+	</div>
+</div>
+
+
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<footer class="footer" role="contentinfo" style="min-height: auto; padding: 30px;">
+	<ul class="sublinks" style="display: flex; justify-content: center;">
+		<li style="width: auto; padding: 0px 10px;">Made by <a href="http://iamcal.com">Cal Henderson</a></li>
+		<li style="width: auto; padding: 0px 10px;">Copied from <a href="https://quiz.triplebyte.com/language-identification/">Triplebyte</a></li>
+		<li style="width: auto; padding: 0px 10px;"><a title="Twitter" href="https://twitter.com/iamcal"><i class="fa fa-twitter"></i></a></li>
+	</ul>
+</footer>
+
+</div>
+</div>
+
+</body>
+</html>
