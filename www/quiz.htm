@@ -27,28 +27,109 @@ $(function(){
 	$('#next-question').click(function(){ nextQuestion(); });
 	$('#start-button').click(function(){ setupQuestion(0); });
 	$('#retry').click(function(){ setupQuestion(0); });
+
+	//setupQuestion(0);
 });
 
 var qs = [
+
 	{
-		'code' : 'function handleClick() {\n  var counter = document.getElementById(\'counter\');\n  var count = parseInt(counter.innerHTML);\n  counter.innerHTML = count + 1;\n}',
+		'code' : '>++++++++[-<+++++++++>]<.>>+>-[+]++>++>+++[>[->+++<<+++>]<<]>-----.>->\n+++..+++.>-.<<+[>[+>+]>>]<--------------.>>.+++.------.--------.>+.>+.',
 		'hljs' : 'language-javascript',
-		'choices' : ['JavaScript', 'Swift', 'Kotlin', 'C++'],
-		'explanation' : 'Blah blah blah blah blah blah blah blah'
+		'choices' : ['Brainfuck', 'Perl', 'P"', 'C++'],
+		'explanation' : '<b>Brainfuck</b> is the most famous esoteric programming language, and has inspired the creation of a host of other languages. Due to the fact that the last half of its name is often considered one of the most offensive words in the English language, it is sometimes referred to as brainf***, brainf*ck, brainfsck, b****fuck, brainf**k or BF. This can make it a bit difficult to search for information regarding brainfuck on the web, as the proper name might not be used at all in some articles. Brainfuck operates on an array of memory cells, also referred to as the tape, each initially set to zero. There is a pointer, initially pointing to the first memory cell.'
 	},
+
 	{
-		'code' : 'function handleClick() {\n  var counter = document.getElementById(\'counter\');\n  var count = parseInt(counter.innerHTML);\n  counter.innerHTML = count + 1;\n}',
+		'code' : 'Universe of marshy force. Field sense\nshallows the hatchery saying Hello,. World!.\n Hydro. Power spring  sometimes; snowmelt\n      powers   snowmelt always.',
 		'hljs' : 'language-javascript',
-		'choices' : ['JavaScript', 'XSwift', 'XKotlin', 'XC++'],
-		'explanation' : 'Blah blah blah blah blah blah blah blah!'
+		'choices' : ['Homespring', 'Snowflake', 'flow_chart', 'InterWater'],
+		'explanation' : '<b>Homespring</b>, alternatively HOtMEfSPRIbNG, is a high-level esoteric programming language created with the express intention of being far higher level than anyone would ever reasonably need or want. Programs define a map of data control segments through which data flows sequentially and deterministically, and all commands are based on a metaphor of salmon travelling upriver. Each datum is an object consisting of a character string called the "name" and a boolean called the "age" of the datum. Three classes of command can change the value of data (name or age), the behavior of each datum (this behavior can be fixed or vary based on each datum), and the whole of the map on which the data flow.'
+	},
+
+	{
+		'code' : '#0#10#33#100#108#114#111#119#32#44#111#108#108#101#72...............',
+		'hljs' : 'language-javascript',
+		'choices' : ['Emmental', 'ACRONYM', 'Aubergine', 'Campfire'],
+		'explanation' : '<b>Emmental</b> is a self-modifying esoteric programming language designed in 2007. It is defined by a meta-circular interpreter (an Emmental interpreter described in Emmental.) The meta-circular interpreter provides an operation which modifies operations of the meta-circular interpreter. Emmental is a stack-based language, but it also has a queue.'
+	},
+
+
+
+	{
+		'code' : 'iisiiiisiiiiiiiioiiiiiiiiiiiiiiiiiiiiiiiiiiiiioiiiiiiiooiiio\ndddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddo\ndddddddddddddddddddddsddoddddddddoiiioddddddoddddddddo',
+		'hljs' : 'language-javascript',
+		'choices' : ['Deadfish', 'Klein', 'Liquid', 'RAGE!!!'],
+		'explanation' : '<b>Deadfish</b> is a very odd interpreted programming language. Deadfish has a way to output things but it has no way to input them! It has only a few commands, only four in total. It is also case-sensitive, and can deal only with integer values when adding or subtracting, however once squared this number increases greatly!'
+	},
+
+	{
+		'code' : 'MOV R0, 10\nMOV R2, 0\nSUB R2, 1\nMOV R[R0], "Hello, world!"\nMOV TTY, R[R0]\nSUB R0, R2\nMOV R1, R0\nSUB R1, 23\nNOT R1\nNOT R1\nMUL R1, 8\nCOR +1, -7, R1',
+		'hljs' : 'language-javascript',
+		'choices' : ['SMITH', 'Intolerant', 'Jasp', 'Lazy Bird'],
+		'explanation' : '<b>SMITH</b> is a self-modifying assembly-like language which completely lacks any kind of jump instructions whatsoever. Despite this handicap, it has been shown to be Turing-complete.'
+	},
+
+	{
+		'code' : 'h',
+		'hljs' : 'language-javascript',
+		'choices' : ['HQ9+', 'Dimensions', 'HALT', 'F'],
+		'explanation' : '<b>HQ9+</b> is a very simple language consisting of four operations: H, Q, 9, and +. These operations can be used to create typical example programs for programming langauges; Hello World, Quines, 99 Bottles of Beer and incrementing an accumulator.'
+	},
+
+	{
+		'code' : 'Ook. Ook. Ook! Ook? Ook. Ook? Ook. Ook! Ook? Ook!\nOok? Ook. Ook! Ook! Ook! Ook? Ook. Ook. Ook! Ook.\nOok? Ook. Ook! Ook! Ook? Ook!',
+		'hljs' : 'language-javascript',
+		'choices' : ['Ook!', 'memPanic', 'Oof!', 'OOLANG'],
+		'explanation' : '<b>Ook!</b> is a programming language designed for orang-utans. Ook! is essentially isomorphic to the well-known esoteric language BrainFuck, but has even fewer syntax elements.'
+	},
+
+	{
+		'code' : 'Ingredients.\n72 g haricot beans\n101 eggs\n108 g lard\n111 cups oil\n32 zucchinis\n119 ml water\n114 g red salmon\n100 g dijon mustard\n33 potatoes\n\nMethod.\nPut potatoes into the mixing bowl. Put dijon mustard into the mixing bowl. Put lard into the mixing bowl. Put red salmon into the mixing bowl. Put oil into the mixing bowl. Put water into the mixing bowl. Put zucchinis into the mixing bowl. Put oil into the mixing bowl. Put lard into the mixing bowl. Put lard into the mixing bowl. Put eggs into the mixing bowl. Put haricot beans into the mixing bowl. Liquefy contents of the mixing bowl. Pour contents of the mixing bowl into the baking dish.\n\nServes 1.',
+		'hljs' : 'language-javascript',
+		'choices' : ['Chef', 'Beeswax', 'MIX', 'Cood'],
+		'explanation' : '<b>Chef</b> is a programming language in which programs look like recipes. The ingredients hold individual data values. All ingredients are numerical, though they can be interpreted as Unicode for I/O purposes. Liquid ingredients will be output as Unicode characters, while dry or unspecified ingredients will be output as numbers. Chef has access to an unlimited supply of mixing bowls and baking dishes. These can contain ingredient values. The ingredients in a mixing bowl or baking dish are ordered, like a stack of pancakes. New ingredients are placed on top, and if values are removed they are removed from the top.'
+	},
+
+	{
+		'code' : '>              v\nv  ,,,,,"Hello"<\n>48*,          v\nv,,,,,,"World!"<\n>25*,@',
+		'hljs' : 'language-javascript',
+		'choices' : ['Befunge', 'Dimensions', 'Shuffle', 'SMITH'],
+		'explanation' : '<b>Befunge</b> is a <a href="https://en.wikipedia.org/wiki/Stack-oriented_programming_language" title="Stack-oriented programming language">stack-based</a>, <a href="https://en.wikipedia.org/wiki/Reflection_(computer_science)" title="Reflection (computer science)">reflective</a>, <a href="https://en.wikipedia.org/wiki/Esoteric_programming_language" title="Esoteric programming language">esoteric programming language</a>. It differs from conventional languages in that programs are arranged on a two-dimensional grid. "Arrow" instructions direct the control flow to the left, right, up or down, and loops are constructed by sending the control flow in a cycle. It has been described as "a cross between <a href="https://en.wikipedia.org/wiki/Forth_(programming_language)" title="Forth (programming language)">Forth</a> and <a href="https://en.wikipedia.org/wiki/Lemmings_(video_game)" title="Lemmings (video game)">Lemmings</a>."'
+	},
+
+	{
+		'code' : '{F[f(_a)A!(_o)O!(_t)$(_n)1=,(_isle)(_n)*<2>(_a)(le).?=/(_isle)<1>^\(_n)*<1>(_a)\ns.?(_t)f.?(_n)*<2>(_a)s.?(_t)f.?(_a)a.?]}{M[m(_a)A!(_f)F!(_o)O!(_n)<1>=(_nlm)\n<1>=/(_nlm)(_n)*(_f)f.?(_o)(on).?" "(_o)o.?(_n)(_n)*<1>(_a)a.?=(_nlm)(_n)*<20>\n(_a)(le).?=\]}',
+		'hljs' : 'language-javascript',
+		'choices' : ['Glass', 'Beeswax', 'Byte Syze', 'Brainfuck'],
+		'explanation' : '<b>Glass</b> is an esoteric programming language developed in 2005. It combines an unintuitive postfix notation with heavy object-orientation, requiring extensive juggling of a main stack combined with its object-oriented structure. No other language is implemented like this, because it would be idiotic.'
+	},
+
+
+	{
+		'code' : 'DO ,1 <- #13\nPLEASE DO ,1 SUB #1 <- #238\nDO ,1 SUB #3 <- #112\nDO ,1 SUB #4 <- #0\nDO ,1 SUB #5 <- #64\nDO ,1 SUB #6 <- #194\nDO ,1 SUB #7 <- #48\nPLEASE DO ,1 SUB #8 <- #22\nDO ,1 SUB #9 <- #248\nDO ,1 SUB #10 <- #168\nDO ,1 SUB #11 <- #24\nDO ,1 SUB #12 <- #16\nDO ,1 SUB #13 <- #162\nPLEASE READ OUT ,1\nPLEASE GIVE UP',
+		'hljs' : 'language-javascript',
+		'choices' : ['INTERCAL', 'ACRONYM', 'λιμπ', 'Юᓂ곧⎔'],
+		'explanation' : 'The Compiler Language With No Pronounceable Acronym, abbreviated <b>INTERCAL</b>, is an esoteric programming language that was created as a parody in 1972. It satirizes aspects of the various programming languages at the time, as well as the proliferation of proposed language constructs and notations in the 1960s.'
+	},
+
+	{
+		'code' : "D'BA@?>=<;:9876543210/.-,+*)('&%$#\"!~}|{zyxwv�����������������������}yuqmiea]YUQMIEA=95",
+		'hljs' : 'language-javascript',
+		'choices' : ['Malbolge', 'Befunge', 'ACRONYM', 'Spoon'],
+		'explanation' : '<b>Malbolge</b> is a language designed to be difficult (or perhaps impossible) to program in. For example, the effect of any instruction depends on where it is located in memory (mod 94, of course), all instructions are self-modifying (according to a permutation table) and both the code and data pointers are incremented after every instruction, making it hard to re-use any code or data. There is no way to initialize memory except to one of the 8 instruction characters, there is no LOAD or STORE operator, and the only available memory operators (both of them) work in trinary and are designed to be opaque. The only control flow construct is an unconditional computed jump, which is also nearly worthless since there is no way (or certainly no obvious way) to set memory to anything except the 8 instruction characters.'
 	}
+
 ];
 
 var scores = [
-	[7, "Excellent job!","You're in the top 3% of engineers!"],
-	[2, "Great work!","You're in the top 25% of engineers. We think you're made of the right stuff."],
-	[1, "Good work!","You're in the top 50% of engineers."],
-	[0, "Not bad!", ""]
+	[12, "Perfect!","You're probably Chris Pressy himself."],
+	[10, "Amazing!","You're either very lucky, or spend a lot of time with weird code."],
+	[8, "Excellent job!",""],
+	[6, "Great work!",""],
+	[4, "Good work!",""],
+	[2, "Not bad!", ""],
+	[0, "You tried?", ""]
 ];
 
 var g_score = 0;
@@ -220,7 +301,8 @@ function scrollTo(node){
 		<h1 class="center">Esoteric Language Identification Quiz</h1>
 		<h2 class="center" style="margin-bottom: 15px;">How many obscure languages can you identify?</h2>
 		<hr class="full-line" style="margin: 15px 0px;">
-		<p class="description">There are hundreds of programming languages in existence, dozens of which are in common use today. Many programmers know at least 2 or 3 languages and can identify several more from a short snippet of code. Can you identify all 15 of these languages?</p>
+		<p class="description">There are hundreds of esoteric programming languages in existence, only a few of which are "well known".
+		Many programmers know at least 1 or 2, but can you identify all 12 of these languages?</p>
 		<img src="laptop.bea0e7a9.png" alt="Welcome!" style="height: 150px; width: 260px; margin: 15px auto 30px; display: block;">
 		<div class="center" style="margin-top: 15px;"><input type="submit" value="Start the quiz" id="start-button"></div>
 	</div>
@@ -254,10 +336,7 @@ function scrollTo(node){
 			</div>
 		</div>
 		<p class="description">
-			We don’t just make quizzes here. We also help engineers get jobs.&nbsp;
-			<strong>Take a slightly longer version of our quiz, and get offers from top tech companies.</strong>
-			&nbsp;
-			<a href="//triplebyte.com/?utm_source=quiz&amp;utm_campaign=quiz1_endscreen">Learn more.</a>
+			The buttons above don't actually do anything yet ¯\_(ツ)_/¯
 		</p>
 		<div class="center"><a href="#" id="retry"><i class="fa fa-undo" style="margin-right: 5px;"></i>Retry</a></div>
 	</div>
@@ -270,13 +349,14 @@ function scrollTo(node){
 <div class="challengeIn">
 <div name="question">
 <div id="question-header">
+
 <h3 id="qtitle">Question 1 / 15</h3>
-<div>
-<p>What language is the below code written in?</p>
-</div>
+<div><p>What language is the below code written in?</p></div>
+
 <pre>
 <code id="code" class="language-javascript hljs">test</code>
 </pre>
+
 </div>
 </div>
 

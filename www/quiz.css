@@ -6009,3 +6009,7 @@ border:1px solid #c5da71
 }
 
 
+#explanation p a {
+	color: #fff;
+	text-decoration: underline;
+}
